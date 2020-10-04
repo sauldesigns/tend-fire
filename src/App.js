@@ -72,11 +72,11 @@ function App() {
 		setCookie('tendFire_Counter', counter + 1, {
 			expires: dt,
 		});
-		if (auth.currentUser !== null) {
-			db.collection('tendfire_counter')
-				.doc('counter')
-				.update({ counter: increment });
-		}
+		// if (auth.currentUser !== null) {
+		db.collection('tendfire_counter')
+			.doc('counter')
+			.update({ counter: increment });
+		// }
 	};
 
 	return (
