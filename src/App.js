@@ -6,13 +6,19 @@ import campfireOn from './lotties/campfire-on.json';
 // import openSocket from 'socket.io-client';
 // import Chat from './components/Chat';
 import AdSense from 'react-adsense';
+import firebase from 'firebase';
+import db, { auth } from './services/firebase';
 import { useCookies } from 'react-cookie';
 
 // const socket = openSocket('http://localhost:3005');
 
 function App() {
 	const [counter, setCounter] = useState(0);
+	const [globalCounter, setGlobalCounter] = useState(0);
+	const [loading, setLoading] = useState(true);
 	const [cookies, setCookie] = useCookies(['tendFire_Counter']);
+	const [error, setError] = useState('');
+	const increment = firebase.firestore.FieldValue.increment(1);
 
 	useEffect(() => {
 		let _token = cookies.tendFire_Counter;
@@ -21,6 +27,24 @@ function App() {
 		} else {
 			setCounter(_token * 1);
 		}
+
+		const getCounter = db
+			.collection('tendfire_counter')
+			.doc('counter')
+			.onSnapshot(
+				(doc) => {
+					setLoading(false);
+					setGlobalCounter(doc.data().counter);
+				},
+				(err) => {
+					setError(err);
+				}
+			);
+
+		// returning the unsubscribe function will ensure that
+		// we unsubscribe from document changes when our id
+		// changes to a different value.
+		return () => getCounter();
 	}, [counter, cookies, setCookie]);
 
 	const defaultOptions = {
@@ -48,6 +72,11 @@ function App() {
 		setCookie('tendFire_Counter', counter + 1, {
 			expires: dt,
 		});
+		if (auth.currentUser !== null) {
+			db.collection('tendfire_counter')
+				.doc('counter')
+				.update({ counter: increment });
+		}
 	};
 
 	return (
@@ -60,10 +89,10 @@ function App() {
 					style={{ display: 'block' }}
 					format='auto'
 					responsive='true'
-					layoutKey='-gw-1+2a-9x+5c'
 				/>
 				<h1>Tend Fire</h1>
-				<h4>{counter}</h4>
+				<h4>Global Count: {loading ? 0 : globalCounter} times</h4>
+				<h4>You have tended the fire {counter} times</h4>
 				<div>
 					{counter === 0 ? (
 						<Lottie
@@ -84,6 +113,8 @@ function App() {
 				<button onClick={() => incrementCounter()} className='app__mainButton'>
 					Tend Fire
 				</button>
+
+				<p>{error}</p>
 				{/* <Chat /> */}
 			</header>
 		</div>
