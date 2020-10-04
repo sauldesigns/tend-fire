@@ -8,9 +8,13 @@
     "@testing-library/user-event": "^7.1.2",
     "firebase": "^7.22.0",
     "react": "^16.13.1",
+    "react-adsense": "^0.1.0",
+    "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
     "react-lottie": "^1.2.3",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.1"
   },
   "scripts": {
     "start": "react-scripts start",
