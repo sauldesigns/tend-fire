@@ -6,8 +6,7 @@ import campfireOn from './lotties/campfire-on.json';
 // import openSocket from 'socket.io-client';
 // import Chat from './components/Chat';
 import AdSense from 'react-adsense';
-import firebase from 'firebase';
-import db, { auth } from './services/firebase';
+import db, { increment } from './services/firebase';
 import { useCookies } from 'react-cookie';
 
 // const socket = openSocket('http://localhost:3005');
@@ -18,7 +17,6 @@ function App() {
 	const [loading, setLoading] = useState(true);
 	const [cookies, setCookie] = useCookies(['tendFire_Counter']);
 	const [error, setError] = useState('');
-	const increment = firebase.firestore.FieldValue.increment(1);
 
 	useEffect(() => {
 		let _token = cookies.tendFire_Counter;
