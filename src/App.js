@@ -16,6 +16,7 @@ function App() {
 	const [globalCounter, setGlobalCounter] = useState(0);
 	const [loading, setLoading] = useState(true);
 	const [cookies, setCookie] = useCookies(['tendFire_Counter']);
+	const [health, setHealth] = useState(0);
 	const [error, setError] = useState('');
 
 	useEffect(() => {
@@ -39,11 +40,27 @@ function App() {
 				}
 			);
 
+		const getHealth = db
+			.collection('tendfire_health')
+			.doc('red')
+			.onSnapshot(
+				(doc) => {
+					setLoading(false);
+					setHealth(doc.data().health);
+				},
+				(err) => {
+					setError(err);
+				}
+			);
+
 		// returning the unsubscribe function will ensure that
 		// we unsubscribe from document changes when our id
 		// changes to a different value.
-		return () => getCounter();
-	}, [counter, cookies, setCookie]);
+		return () => {
+			getCounter();
+			getHealth();
+		};
+	}, [counter, cookies, setCookie, health, setHealth]);
 
 	const defaultOptions = {
 		loop: true,
@@ -75,6 +92,10 @@ function App() {
 			.doc('counter')
 			.update({ counter: increment });
 		// }
+
+		if (health + 1 <= 100) {
+			db.collection('tendfire_health').doc('red').update({ health: increment });
+		}
 	};
 
 	return (
@@ -91,6 +112,15 @@ function App() {
 				<h1>Tend Fire</h1>
 				<h4>Global Count: {loading ? 0 : globalCounter} times</h4>
 				<h4>You have tended the fire {counter} times</h4>
+				<div className='app__health'>
+					<h5>Health</h5>
+					<progress
+						className='app__healthbar'
+						value={health}
+						max={100}
+					></progress>
+				</div>
+
 				<div>
 					{counter === 0 ? (
 						<Lottie

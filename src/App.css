@@ -34,6 +34,15 @@
 	color: white;
 }
 
+.app__health {
+	display: flex;
+	align-items: center;
+}
+
+.app__healthbar {
+	margin-left: 20px;
+}
+
 @keyframes App-logo-spin {
 	from {
 		transform: rotate(0deg);
