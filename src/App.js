@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import Lottie from 'react-lottie';
 import campfireOff from './lotties/campfire-off.json';
 import campfireOn from './lotties/campfire-on.json';
-// import openSocket from 'socket.io-client';
-// import Chat from './components/Chat';
 import AdSense from 'react-adsense';
 import db, { increment } from './services/firebase';
 import { useCookies } from 'react-cookie';
+import { Box, Fab } from '@material-ui/core';
+import Fire from './components/Fire';
+import NavBar from './components/NavBar';
+import { Whatshot } from '@material-ui/icons';
+import PublicIcon from '@material-ui/icons/Public';
 
 // const socket = openSocket('http://localhost:3005');
 
@@ -18,6 +20,7 @@ function App() {
 	const [cookies, setCookie] = useCookies(['tendFire_Counter']);
 	const [health, setHealth] = useState(0);
 	const [error, setError] = useState('');
+	const [selectedTab, setSelectedTab] = useState(0);
 
 	useEffect(() => {
 		let _token = cookies.tendFire_Counter;
@@ -60,7 +63,15 @@ function App() {
 			getCounter();
 			getHealth();
 		};
-	}, [counter, cookies, setCookie, health, setHealth]);
+	}, [
+		counter,
+		cookies,
+		setCookie,
+		health,
+		setHealth,
+		selectedTab,
+		setSelectedTab,
+	]);
 
 	const defaultOptions = {
 		loop: true,
@@ -98,54 +109,95 @@ function App() {
 		}
 	};
 
-	return (
-		<div className='App'>
-			{/*  */}
-			<header className='App-header'>
-				<AdSense.Google
-					client='ca-pub-1476711081418982'
-					slot='9243293022'
-					style={{ display: 'block' }}
-					format='auto'
-					responsive='true'
-				/>
-				<h1>Tend Fire</h1>
-				<h4>Global Count: {loading ? 0 : globalCounter} times</h4>
-				<h4>You have tended the fire {counter} times</h4>
-				<div className='app__health'>
-					<h5>Health</h5>
-					<progress
-						className='app__healthbar'
-						value={health}
-						max={100}
-					></progress>
-				</div>
+	const changeTab = (index) => {
+		console.log('clickec');
+		setSelectedTab(index);
+	};
 
+	return (
+		<div className='app'>
+			<nav className='app__nav'>
+				<NavBar />
+			</nav>
+			<Box display='flex' justifyContent='center'>
+				<Box display='flex'>
+					<div className='app__globalstats'>
+						<PublicIcon />
+						{loading ? 0 : globalCounter}
+					</div>
+
+					<div className='app__localstats'>
+						<Whatshot />
+						{counter}
+					</div>
+				</Box>
+			</Box>
+			<div className='app__fire'>
 				<div>
 					{counter === 0 ? (
-						<Lottie
-							options={defaultOptions}
-							isClickToPauseDisabled
-							height={400}
-							width={400}
-						/>
+						<Fire options={defaultOptions} health={health} />
 					) : (
-						<Lottie
-							options={onOptions}
-							isClickToPauseDisabled
-							height={400}
-							width={400}
-						/>
+						<Fire options={onOptions} health={health} />
 					)}
 				</div>
-				<button onClick={() => incrementCounter()} className='app__mainButton'>
-					Tend Fire
-				</button>
-
-				<p>{error}</p>
-				{/* <Chat /> */}
-			</header>
+			</div>
+			<div className='app__tendButton'>
+				<Fab
+					color='secondary'
+					aria-label='add'
+					onClick={() => incrementCounter()}
+				>
+					<Whatshot />
+				</Fab>
+			</div>
 		</div>
+		// <div className='App'>
+		// 	{/*  */}
+		// 	<header className='App-header'>
+		// 		<AdSense.Google
+		// 			client='ca-pub-1476711081418982'
+		// 			slot='9243293022'
+		// 			style={{ display: 'block' }}
+		// 			format='auto'
+		// 			responsive='true'
+		// 		/>
+		// 		<h1>Tend Fire</h1>
+		// 		<h4>Global Count: {loading ? 0 : globalCounter} times</h4>
+		// 		<h4>You have tended the fire {counter} times</h4>
+		// 		<div className='app__health'>
+		// 			<h5>Health</h5>
+		// 			<progress
+		// 				className='app__healthbar'
+		// 				value={health}
+		// 				max={100}
+		// 			></progress>
+		// 		</div>
+
+		// 		<div>
+		// 			{counter === 0 ? (
+		// 				<Lottie
+		// 					options={defaultOptions}
+		// 					isClickToPauseDisabled
+		// 					height={400}
+		// 					width={400}
+		// 				/>
+		// 			) : (
+		// 				<Lottie
+		// 					options={onOptions}
+		// 					isClickToPauseDisabled
+		// 					height={400}
+		// 					width={400}
+		// 				/>
+		// 			)}
+		// 		</div>
+		// 		<button onClick={() => incrementCounter()} className='app__mainButton'>
+		// 			Tend Fire
+		// 		</button>
+
+		// 		<p>{error}</p>
+		// 		{/* <Chat /> */}
+		// 	</header>
+		// </div>
 	);
 }
 

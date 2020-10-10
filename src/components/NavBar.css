@@ -1,0 +1,6 @@
+.navbar {
+	display: flex;
+	max-width: 600px;
+	justify-content: space-between;
+	margin-bottom: 26px;
+}
