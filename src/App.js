@@ -109,11 +109,6 @@ function App() {
 		}
 	};
 
-	const changeTab = (index) => {
-		console.log('clickec');
-		setSelectedTab(index);
-	};
-
 	return (
 		<div className='app'>
 			<nav className='app__nav'>
@@ -150,17 +145,18 @@ function App() {
 					<Whatshot />
 				</Fab>
 			</div>
+			<AdSense.Google
+				client='ca-pub-1476711081418982'
+				slot='9243293022'
+				style={{ display: 'block' }}
+				format='auto'
+				responsive='true'
+			/>
 		</div>
 		// <div className='App'>
 		// 	{/*  */}
 		// 	<header className='App-header'>
-		// 		<AdSense.Google
-		// 			client='ca-pub-1476711081418982'
-		// 			slot='9243293022'
-		// 			style={{ display: 'block' }}
-		// 			format='auto'
-		// 			responsive='true'
-		// 		/>
+
 		// 		<h1>Tend Fire</h1>
 		// 		<h4>Global Count: {loading ? 0 : globalCounter} times</h4>
 		// 		<h4>You have tended the fire {counter} times</h4>
