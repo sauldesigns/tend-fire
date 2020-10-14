@@ -8,8 +8,9 @@ import { useCookies } from 'react-cookie';
 import { Box, Fab } from '@material-ui/core';
 import Fire from './components/Fire';
 import NavBar from './components/NavBar';
-import { Whatshot } from '@material-ui/icons';
+import { Chat, Whatshot } from '@material-ui/icons';
 import PublicIcon from '@material-ui/icons/Public';
+import ChatBox from './components/ChatBox';
 
 // const socket = openSocket('http://localhost:3005');
 
@@ -63,15 +64,7 @@ function App() {
 			getCounter();
 			getHealth();
 		};
-	}, [
-		counter,
-		cookies,
-		setCookie,
-		health,
-		setHealth,
-		selectedTab,
-		setSelectedTab,
-	]);
+	}, [counter, cookies, setCookie, health, selectedTab]);
 
 	const defaultOptions = {
 		loop: true,
@@ -111,47 +104,52 @@ function App() {
 
 	return (
 		<div className='app'>
-			<nav className='app__nav'>
-				<NavBar />
-			</nav>
-			<Box display='flex' justifyContent='center'>
-				<Box display='flex'>
-					<div className='app__globalstats'>
-						<PublicIcon />
-						{loading ? 0 : globalCounter}
-					</div>
+			<Box display='flex' flexDirection='column' flex={1}>
+				<nav className='app__nav'>
+					<NavBar />
+				</nav>
+				<Box display='flex' justifyContent='center'>
+					<Box display='flex'>
+						<div className='app__globalstats'>
+							<PublicIcon />
+							{loading ? 0 : globalCounter}
+						</div>
 
-					<div className='app__localstats'>
-						<Whatshot />
-						{counter}
-					</div>
+						<div className='app__localstats'>
+							<Whatshot />
+							{counter}
+						</div>
+					</Box>
 				</Box>
-			</Box>
-			<div className='app__fire'>
-				<div>
-					{counter === 0 ? (
-						<Fire options={defaultOptions} health={health} />
-					) : (
-						<Fire options={onOptions} health={health} />
-					)}
+				<div className='app__fire'>
+					<div>
+						{counter === 0 ? (
+							<Fire options={defaultOptions} health={health} />
+						) : (
+							<Fire options={onOptions} health={health} />
+						)}
+					</div>
 				</div>
-			</div>
-			<div className='app__tendButton'>
-				<Fab
-					color='secondary'
-					aria-label='add'
-					onClick={() => incrementCounter()}
-				>
-					<Whatshot />
-				</Fab>
-			</div>
-			<AdSense.Google
-				client='ca-pub-1476711081418982'
-				slot='9243293022'
-				style={{ display: 'block' }}
-				format='auto'
-				responsive='true'
-			/>
+				<div className='app__tendButton'>
+					<Fab
+						color='secondary'
+						aria-label='add'
+						onClick={() => incrementCounter()}
+					>
+						<Whatshot />
+					</Fab>
+				</div>
+				<AdSense.Google
+					client='ca-pub-1476711081418982'
+					slot='9243293022'
+					style={{ display: 'block' }}
+					format='auto'
+					responsive='true'
+				/>
+			</Box>
+			{/* <Box display='flex' marginTop='28px' justifyContent='center'>
+				<ChatBox />
+			</Box> */}
 		</div>
 		// <div className='App'>
 		// 	{/*  */}

@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import './Chat.css';
-import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:3005');
+import './ChatBox.css';
 
-function Chat() {
+function ChatBox() {
 	const [message, setMessage] = useState('');
-
-	const sendMessage = (value) => {
-		socket.emit('chat', value);
-	};
 
 	const submitForm = (e) => {
 		e.preventDefault();
-		sendMessage(message);
 	};
 
 	return (
@@ -35,4 +28,4 @@ function Chat() {
 	);
 }
 
-export default Chat;
+export default ChatBox;
