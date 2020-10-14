@@ -8,9 +8,9 @@ import { useCookies } from 'react-cookie';
 import { Box, Fab } from '@material-ui/core';
 import Fire from './components/Fire';
 import NavBar from './components/NavBar';
-import { Chat, Whatshot } from '@material-ui/icons';
+import { Whatshot } from '@material-ui/icons';
 import PublicIcon from '@material-ui/icons/Public';
-import ChatBox from './components/ChatBox';
+// import ChatBox from './components/ChatBox';
 
 // const socket = openSocket('http://localhost:3005');
 
@@ -21,7 +21,6 @@ function App() {
 	const [cookies, setCookie] = useCookies(['tendFire_Counter']);
 	const [health, setHealth] = useState(0);
 	const [error, setError] = useState('');
-	const [selectedTab, setSelectedTab] = useState(0);
 
 	useEffect(() => {
 		let _token = cookies.tendFire_Counter;
@@ -64,7 +63,7 @@ function App() {
 			getCounter();
 			getHealth();
 		};
-	}, [counter, cookies, setCookie, health, selectedTab]);
+	}, [counter, cookies, setCookie, health]);
 
 	const defaultOptions = {
 		loop: true,
@@ -146,6 +145,7 @@ function App() {
 					format='auto'
 					responsive='true'
 				/>
+				{error !== '' ? null : <span>{error}</span>}
 			</Box>
 			{/* <Box display='flex' marginTop='28px' justifyContent='center'>
 				<ChatBox />

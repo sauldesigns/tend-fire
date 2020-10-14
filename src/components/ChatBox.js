@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './ChatBox.css';
 
 function ChatBox() {
@@ -14,7 +14,7 @@ function ChatBox() {
 				<div class='chat-window'></div>
 				<form class='chat-form' onSubmit={submitForm}>
 					<label class='chat-label'>
-						Enter a message:
+						Enter a message: {message}
 						<input
 							onChange={(e) => setMessage(e.target.value)}
 							type='text'
