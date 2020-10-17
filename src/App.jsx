@@ -10,7 +10,7 @@ import Fire from './components/Fire';
 import NavBar from './components/NavBar';
 import { Whatshot } from '@material-ui/icons';
 import PublicIcon from '@material-ui/icons/Public';
-// import ChatBox from './components/ChatBox';
+import ChatBox from './components/ChatBox';
 
 // const socket = openSocket('http://localhost:3005');
 
@@ -147,9 +147,9 @@ function App() {
 				/>
 				{error !== '' ? null : <span>{error}</span>}
 			</Box>
-			{/* <Box display='flex' marginTop='28px' justifyContent='center'>
+			<Box display='flex' marginTop='28px' justifyContent='center'>
 				<ChatBox />
-			</Box> */}
+			</Box>
 		</div>
 		// <div className='App'>
 		// 	{/*  */}

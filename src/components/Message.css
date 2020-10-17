@@ -1,0 +1,32 @@
+.message {
+	display: flex;
+	justify-content: flex-end;
+	text-align: right;
+	margin: 8px 8px;
+}
+
+.message__main {
+	display: flex;
+	justify-content: flex-start;
+	text-align: left;
+}
+
+.message__container {
+	display: flex;
+	flex-direction: column;
+}
+
+.message_userdetails {
+	padding: 6px;
+	font-size: 13px;
+}
+
+.message__item {
+	display: inline-block;
+	word-wrap: break-word;
+
+	background: lightblue;
+	padding: 10px 16px;
+	border-radius: 10px;
+	max-width: 350px;
+}
